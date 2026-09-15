@@ -1,7 +1,7 @@
-# Plan Model
+# Plan Core Model
 
-Version: 0.1  
-Status: Draft  
+Version: 0.1
+Status: Draft
 Date: 2026-09-14
 
 ## Purpose
@@ -10,8 +10,14 @@ This document defines what a training plan is,
 what information it must contain,
 and how the 100m Performance Planning system evaluates plan quality.
 
----
+This document defines the core model of a training plan: its objects,
+relationships, dimensions, invariants, and interfaces.
 
+It does not contain the operational rulebooks or ordered execution procedures
+used to apply the model. Those materials are linked from the relevant model
+interfaces below.
+
+---
 ## 1. Definition of a Training Plan
 
 A training plan is a time-constrained and updateable decision structure
@@ -34,15 +40,15 @@ A training plan is therefore more than a schedule of exercises.
 
 A complete plan must connect:
 
-Goal  
-→ Athlete State  
-→ Training Problem  
-→ Priority  
-→ Stimulus  
-→ Dose  
-→ Temporal Organization  
-→ Monitoring  
-→ Response  
+Goal
+→ Athlete State
+→ Training Problem
+→ Priority
+→ Stimulus
+→ Dose
+→ Temporal Organization
+→ Monitoring
+→ Response
 → Decision Update.
 
 The plan may contain predetermined training sessions,
@@ -314,287 +320,42 @@ If the available information is insufficient to answer a decision-critical
 question, the system must mark the plan as information-incomplete rather
 than silently inventing the missing value.
 
-## 3. Structural Validity
+---
+
+## 3. Plan Quality Model
+
+Plan quality has three irreducible dimensions:
+
+- Structural Validity,
+- Conditional Appropriateness,
+- Adaptive Capacity.
+
+They are related but not interchangeable. A plan may be structurally valid but
+inappropriate for the current athlete; a plan may be appropriate at the time
+of prescription but lack a credible way to update when conditions change; and
+a plan may produce a favorable result while still containing structural defects.
+
+Structural validity is evaluated before fine-grained comparison of expected
+training effectiveness. Conditional appropriateness and plan comparison apply
+only within the feasible planning space. Adaptive capacity preserves decision
+quality after actual exposure and response provide new information.
+
+### 3.1 Structural Validity
 
 Structural validity refers to whether a training plan is internally coherent,
 interpretable, executable, and reviewable before considering whether it is
 optimal for a specific athlete.
 
-Structural validity is therefore different from conditional appropriateness.
-
-A plan may be structurally valid but inappropriate for a specific athlete.
-
-A plan may also produce a favorable result while still containing structural
-defects.
-
-The system should evaluate structural validity before comparing expected
-training effectiveness.
-
----
-
-### 3.1 Objective Clarity
-
-The plan must identify what it is trying to achieve.
-
-The objective should be specific enough to organize decisions.
-
-Examples of insufficient objectives include:
-
-- "get faster,"
-- "improve athleticism,"
-- "build power,"
-- "increase fitness."
-
-These may describe general intentions but do not yet define a usable planning
-problem.
-
-A structurally valid objective should clarify:
-
-- the target performance outcome,
-- the relevant time horizon,
-- the current adaptation problem,
-- and the priority of that problem.
-
----
-
-### 3.2 Dose Interpretability
-
-The prescribed training must be interpretable.
-
-A plan should provide enough information to understand the actual stimulus.
-
-For example:
-
-"MaxV training"
-
-is not a complete prescription.
-
-Relevant information may include:
-
-- approach distance,
-- target distance,
-- target velocity,
-- repetitions,
-- sets,
-- recovery interval,
-- timing method,
-- actual achieved velocity,
-- and stop conditions.
-
-Likewise:
-
-"strength training"
-
-does not define:
-
-- exercise,
-- load,
-- repetitions,
-- sets,
-- proximity to failure,
-- movement range,
-- or intended execution quality.
-
-If the dose cannot be interpreted, it cannot be reliably executed,
-compared, or revised.
-
----
-
-### 3.3 Internal Consistency
-
-The plan must not contain contradictions between its stated objective,
-classification, and actual content.
-
-Examples include:
-
-- calling a session "Low" while prescribing substantial lower-limb loading,
-- declaring MaxV the primary objective while allocating most recovery
-  resources to unrelated work,
-- labeling all capacities as Primary,
-- prescribing recovery while simultaneously increasing total load,
-- or describing a taper while replacing reduced sprint volume with additional
-  strength, jumping, or testing.
-
-Labels do not override actual content.
-
-The system must evaluate what the plan actually requires.
-
----
-
-### 3.4 Temporal Consistency
-
-Training elements must be compatible across time.
-
-A session may be reasonable in isolation but unreasonable in sequence.
-
-The system should check:
-
-- within-session ordering,
-- spacing between demanding sessions,
-- competition placement,
-- travel,
-- testing,
-- recovery windows,
-- and interactions between adjacent training days.
-
-A plan is structurally defective if its own schedule prevents important
-sessions from being executed as intended.
-
----
-
-### 3.5 Resource Feasibility
-
-The plan must fit the resources that actually exist.
-
-Relevant resources may include:
-
-- available training days,
-- session duration,
-- track access,
-- sprinting distance,
-- gym access,
-- timing equipment,
-- recovery time,
-- travel conditions,
-- coaching supervision,
-- and athlete attention.
-
-A plan that requires unavailable resources is not executable.
-
-The system must not silently assume access to elite-level facilities,
-medical support, recovery resources, or unlimited training time.
-
----
-
-### 3.6 Priority Coherence
-
-The plan must allocate limited resources according to declared priorities.
-
-If multiple goals compete for the same time or recovery budget,
-their relative importance must be visible.
-
-A structurally valid plan should distinguish between:
-
-- development priorities,
-- maintenance priorities,
-- supporting work,
-- and temporarily reduced or withdrawn work.
-
-If every training quality receives development-level volume,
-the plan has not actually established priorities.
-
----
-
-### 3.7 Recovery Coherence
-
-The recovery structure must be compatible with the prescribed load.
-
-The plan should not treat recovery as an empty label.
-
-It should consider:
-
-- the residual cost of previous sessions,
-- the content of so-called Low days,
-- expected tissue loading,
-- competition load,
-- travel,
-- lifestyle stress,
-- and the demands of the next key session.
-
-A recovery structure is invalid if the plan repeatedly creates more residual
-cost than the next important training task can tolerate.
-
----
-
-### 3.8 Monitoring Coherence
-
-Monitoring must correspond to the decisions the plan claims to make.
-
-If the plan states that training will be adjusted according to performance,
-recovery, or tissue response, then the relevant information must actually be
-collected.
-
-The system should ask:
-
-- What is being monitored?
-- Why is it being monitored?
-- How is it measured?
-- What decision can it change?
-- How much noise is expected?
-- When will it be reviewed?
-
-Monitoring that cannot alter interpretation or action is informationally
-redundant.
-
----
-
-### 3.9 Correction Path
-
-A structurally valid plan must define what happens when expectations are not
-met.
-
-The plan should contain paths for:
-
-- maintaining the current dose,
-- reducing the dose,
-- changing the method,
-- changing the sequence,
-- temporarily withdrawing a stimulus,
-- delaying progression,
-- or transitioning to another phase.
-
-A plan that defines only how to continue is structurally incomplete.
-
----
-
-### 3.10 Traceability
-
-Important planning decisions should be traceable.
-
-The system should be able to reconstruct:
-
-- what the original objective was,
-- what was prescribed,
-- what was actually completed,
-- what response occurred,
-- what information changed,
-- and why the next decision was made.
-
-Without traceability, later success or failure cannot be meaningfully audited.
-
----
-
-### Structural Validity Check
-
-Before evaluating whether a plan is optimal for a specific athlete,
-the system should ask:
-
-1. Is the objective clear?
-2. Is the training dose interpretable?
-3. Is the plan internally consistent?
-4. Is the temporal sequence coherent?
-5. Is the plan executable with available resources?
-6. Are priorities explicit?
-7. Is recovery compatible with the actual load?
-8. Does monitoring correspond to decisions?
-9. Is there a correction path?
-10. Can important decisions be traced?
-
-If a plan fails a necessary structural condition,
-the system should first repair the structure before attempting fine-grained
-optimization.
-
-## 4. Conditional Appropriateness
+A plan must be structurally valid before its conditional appropriateness or
+comparative value can be meaningfully evaluated. The operational checks are
+defined in [Structural Validity Rules](../rules/structural_validity.md).
+
+### 3.2 Conditional Appropriateness
 
 Conditional appropriateness refers to whether a structurally valid training
-plan is suitable for a particular athlete under a particular set of
-conditions.
+plan is suitable for a particular athlete under a particular set of conditions.
 
-A plan can be structurally valid and still be inappropriate.
-
-Appropriateness is therefore relational.
-
-It depends on the interaction between:
+Appropriateness is relational. It depends on the interaction between:
 
 Plan
 → Athlete
@@ -606,324 +367,11 @@ Plan
 → Uncertainty
 → Observed Response.
 
-The system must not evaluate training content independently from these
-conditions.
-
----
-
-### 4.1 Athlete
-
-The system must identify the athlete for whom the plan is intended.
-
-Relevant information may include:
-
-- training age,
-- competitive level,
-- technical proficiency,
-- physical development,
-- previous exposure to similar training,
-- individual preferences,
-- and known tolerance patterns.
-
-Age or personal best alone is not sufficient to characterize an athlete.
-
-Two athletes with similar 100m performance may require different training
-because their training histories, strengths, limitations, and tolerance are
-different.
-
----
-
-### 4.2 Goal
-
-The system must determine what outcome currently has the highest value.
-
-The terminal objective is competitive 100m performance,
-but the immediate planning problem may differ.
-
-Examples may include:
-
-- restoring trainability,
-- improving acceleration,
-- increasing maximum velocity exposure,
-- improving late-race performance,
-- maintaining strength,
-- reducing residual fatigue,
-- or preparing for competition.
-
-A training method may be useful in general but inappropriate if it does not
-serve the current priority.
-
----
-
-### 4.3 Current State
-
-The system must evaluate what the athlete can currently express and tolerate.
-
-Current state may include:
-
-- recent sprint performance,
-- recent training exposure,
-- fatigue,
-- tissue response,
-- technical stability,
-- training motivation,
-- and current ability to tolerate key tasks.
-
-The system should distinguish where possible between:
-
-Capacity Limitation
-
-and
-
-Performance Expression Limitation.
-
-Poor performance does not automatically imply insufficient training.
-
-It may reflect:
-
-- accumulated fatigue,
-- tissue irritation,
-- environmental conditions,
-- testing error,
-- poor recovery,
-- or an inappropriate recent load.
-
----
-
-### 4.4 Training History
-
-Training history provides information about what the athlete has already
-adapted to and how the athlete has responded.
-
-Relevant information may include:
-
-- previously effective doses,
-- previously ineffective doses,
-- known intolerance,
-- recent interruptions,
-- previous injuries,
-- previous taper responses,
-- and long-term exposure to specific methods.
-
-The system must not assume that a dose effective for another athlete is
-appropriate for this athlete.
-
-Individual history should be treated as prior information,
-not as an irreversible rule.
-
----
-
-### 4.5 Competition Calendar
-
-Competition changes the value and cost of training.
-
-The system must consider:
-
-- competition importance,
-- time remaining,
-- competition density,
-- qualifying rounds,
-- travel,
-- recovery between races,
-- and whether competition itself provides a relevant sprint exposure.
-
-A competition must not simply be added on top of a normal training week
-without accounting for its training and recovery cost.
-
----
-
-### 4.6 Time Horizon
-
-The value of an adaptation depends partly on whether there is enough time for
-it to occur, stabilize, transfer, and be expressed.
-
-The system should ask:
-
-- How much time remains?
-- Is there enough time to develop this capacity?
-- Is there enough time to learn the method?
-- Is there enough time to recover from the intervention?
-- Will this work interfere with competition preparation?
-
-A training method with long adaptation or learning cost may be reasonable
-early in a cycle and inappropriate immediately before an important race.
-
----
-
-### 4.7 Recovery Capacity
-
-The plan must match the athlete's actual recovery environment.
-
-Relevant factors may include:
-
-- sleep opportunity,
-- nutrition,
-- academic or occupational load,
-- psychological stress,
-- travel,
-- total available recovery time,
-- and recent accumulated training load.
-
-The system must not assume full-time professional recovery conditions unless
-they actually exist.
-
-The same training dose may have different costs under different recovery
-conditions.
-
----
-
-### 4.8 Tissue Status
-
-Local tissue response must influence planning when relevant.
-
-The system should consider:
-
-- pain,
-- unusual tightness,
-- localized soreness,
-- repeated irritation,
-- previous exposure tolerance,
-- and applicable medical or rehabilitation restrictions.
-
-General readiness indicators must not override a meaningful local tissue
-warning.
-
-A normal CMJ, motivation score, or subjective readiness value does not prove
-that full-speed sprinting is appropriate for a symptomatic tissue.
-
----
-
-### 4.9 Facilities and Environment
-
-The training method must be executable under available conditions.
-
-Relevant constraints may include:
-
-- track length,
-- surface,
-- weather,
-- temperature,
-- indoor space,
-- timing equipment,
-- gym equipment,
-- slope availability,
-- and safe deceleration distance.
-
-The system should modify the method when the environment prevents the intended
-stimulus from being achieved.
-
-For example, a short indoor space should not be labeled MaxV training if the
-athlete cannot actually reach the required velocity.
-
----
-
-### 4.10 Lifestyle Constraints
-
-Training must fit the athlete's real life.
-
-Relevant constraints may include:
-
-- school,
-- work,
-- commuting,
-- examination periods,
-- training time,
-- sleep schedule,
-- and access to food or recovery resources.
-
-A theoretically effective plan that cannot be consistently executed is not
-conditionally appropriate.
-
-Supporting work should not consume resources required for sleep, nutrition, or
-key sprint sessions without sufficient reason.
-
----
-
-### 4.11 Uncertainty
-
-The system must explicitly identify important unknowns.
-
-Examples include:
-
-- missing recent sprint data,
-- uncertain tissue tolerance,
-- changed timing protocol,
-- unfamiliar exercises,
-- uncertain recovery capacity,
-- or indirect evidence.
-
-Greater uncertainty should generally reduce confidence in aggressive or
-irreversible decisions.
-
-When decision-critical information is missing, the system may prefer:
-
-- a smaller exploratory dose,
-- a previously tolerated option,
-- additional observation,
-- or a temporary "cannot determine" judgment.
-
-Uncertainty must not be converted into false precision.
-
----
-
-### 4.12 Observed Response
-
-Appropriateness must be updated after implementation.
-
-The system should compare:
-
-Expected Response
-
-with
-
-Observed Response.
-
-Relevant observations may include:
-
-- whether the intended stimulus was actually achieved,
-- immediate performance,
-- technical quality,
-- local tissue response,
-- delayed recovery,
-- and repeated performance trends.
-
-A plan that was appropriate when prescribed may become inappropriate as the
-athlete's state changes.
-
-Appropriateness is therefore time-dependent.
-
----
-
-### Conditional Appropriateness Rule
-
-For a structurally valid plan, the system should ask:
-
-1. Is this appropriate for this athlete?
-2. Is it appropriate for the current goal?
-3. Is it appropriate for the athlete's current state?
-4. Does it account for training history?
-5. Does it fit the competition calendar?
-6. Is there enough time for the intended adaptation?
-7. Can the athlete realistically recover from it?
-8. Is it compatible with current tissue status?
-9. Can the intended stimulus actually be produced with available facilities?
-10. Can it be executed within lifestyle constraints?
-11. How much important uncertainty remains?
-12. Does the observed response continue to support the original decision?
-
-Conditional appropriateness must be re-evaluated when relevant conditions
-change.
-
-The system must therefore distinguish:
-
-"This method can work"
-
-from
-
-"This method is appropriate here, now, for this athlete."
-
-## 5. Adaptive Capacity
-
+A plan can be structurally valid and still be inappropriate. The operational
+condition checks and re-evaluation rule are defined in
+[Conditional Appropriateness Rules](../rules/conditional_appropriateness.md).
+
+### 3.3 Adaptive Capacity
 Adaptive capacity refers to the ability of a training plan to remain useful
 when relevant conditions change.
 
@@ -946,7 +394,9 @@ conditions.
 
 ---
 
-### 5.1 Planned Direction and Local Flexibility
+---
+
+#### Planned Direction and Local Flexibility
 
 The system should distinguish between:
 
@@ -981,7 +431,9 @@ Prescription is revisable.
 
 ---
 
-### 5.2 Information Must Be Action-Relevant
+---
+
+#### Information Must Be Action-Relevant
 
 New information should modify the plan only when it has sufficient relevance
 to the current decision.
@@ -1001,7 +453,9 @@ revision.
 
 ---
 
-### 5.3 Exposure Must Be Distinguished from Prescription
+---
+
+#### Exposure Must Be Distinguished from Prescription
 
 The system must distinguish between:
 
@@ -1029,7 +483,9 @@ the original plan label.
 
 ---
 
-### 5.4 Immediate Response
+---
+
+#### Immediate Response
 
 The system should evaluate the immediate response to training.
 
@@ -1055,7 +511,9 @@ Immediate success does not prove that the total dose was appropriate.
 
 ---
 
-### 5.5 Delayed Response
+---
+
+#### Delayed Response
 
 The system should also evaluate delayed response.
 
@@ -1078,7 +536,9 @@ because a fixed number of hours has passed.
 
 ---
 
-### 5.6 Repeated Trend
+---
+
+#### Repeated Trend
 
 Single-session data should be interpreted within repeated exposure when
 possible.
@@ -1100,152 +560,9 @@ multiple repetitions before action is taken.
 
 ---
 
-### 5.7 Decision States
-
-After interpreting exposure and response,
-the system should choose among a limited set of decision states.
-
-#### Maintain
-
-Use when:
-
-- the intended stimulus was achieved,
-- the cost was acceptable,
-- and there is not yet sufficient reason to increase or reduce the dose.
-
-Maintain is an active decision.
-
-It must not be treated as failure to progress.
-
 ---
 
-#### Progress
-
-Use when:
-
-- the intended stimulus has been repeatedly achieved,
-- recovery cost remains acceptable,
-- progression serves the current objective,
-- and sufficient time remains for the expected adaptation.
-
-Progression should preferably change one major variable at a time when
-practical.
-
-Progression may involve:
-
-- higher velocity,
-- greater distance,
-- additional volume,
-- increased frequency,
-- greater external load,
-- more demanding task conditions,
-- or greater competition specificity.
-
----
-
-#### Reduce
-
-Use when:
-
-- the training objective remains relevant,
-- but the current dose produces excessive cost,
-- declining quality,
-- or unacceptable recovery demand.
-
-Reduction may involve:
-
-- fewer repetitions,
-- less high-speed distance,
-- lower external load,
-- fewer contacts,
-- longer recovery,
-- reduced supporting work,
-- or lower session frequency.
-
----
-
-#### Modify
-
-Use when:
-
-- the target adaptation remains relevant,
-- but the current method is not producing the desired stimulus,
-- environmental constraints have changed,
-- or the current method is unnecessarily costly.
-
-Modification may involve changing:
-
-- exercise,
-- sprint format,
-- distance,
-- load,
-- surface,
-- sequencing,
-- session placement,
-- or supporting work.
-
-The adaptation target should remain visible during modification.
-
----
-
-#### Temporarily Withdraw
-
-Use when:
-
-- tissue status,
-- competition timing,
-- repeated adverse response,
-- or opportunity cost makes the current stimulus temporarily inappropriate.
-
-Withdrawal should include:
-
-- the reason for withdrawal,
-- any suitable replacement,
-- and conditions for reintroduction.
-
-Temporary withdrawal is not equivalent to abandoning the capacity
-permanently.
-
----
-
-#### Transition
-
-Use when:
-
-- the current phase objective has been sufficiently achieved,
-- the marginal value of continuing has declined,
-- another priority has become more important,
-- or competition timing requires a change in emphasis.
-
-Transition should preserve important capacities when necessary.
-
-A phase should not end only because the planned calendar duration has elapsed.
-
----
-
-### 5.8 Escalation Should Be Earned
-
-The system should not assume that each new week requires additional load.
-
-Progression should be supported by evidence that the athlete has tolerated and
-benefited from the current exposure.
-
-The system should reject automatic rules such as:
-
-- increase volume every week,
-- add a third High day in Week 3,
-- increase load by a fixed percentage,
-- or transition after a fixed number of weeks,
-
-unless those rules are supported by the specific context.
-
-Calendar time may trigger review.
-
-It should not automatically trigger escalation.
-
----
-
-### 5.9 Adaptation Must Respect Hard Constraints
+#### Adaptation Must Respect Hard Constraints
 
 Adaptive modification is bounded.
 
@@ -1265,7 +582,9 @@ It does not replace strategic planning.
 
 ---
 
-### 5.10 Avoid Overreaction
+---
+
+#### Avoid Overreaction
 
 Adaptive capacity includes the ability not to change the plan unnecessarily.
 
@@ -1284,41 +603,17 @@ the problem.
 
 ---
 
-### 5.11 Decision Record
-
-When the plan changes,
-the system should record:
-
-- what new information appeared,
-- what previous assumption was affected,
-- what element of the plan changed,
-- why that change was selected,
-- what response is now expected,
-- when the decision will be reviewed,
-- and what would cause the change to be reversed.
-
-This allows the planning system to learn from its own decisions over time.
-
----
-
-### Adaptive Capacity Rule
+#### Adaptive Capacity Interface
 
 The system should evaluate adaptation using the sequence:
 
 Plan
-
 → Actual Exposure
-
 → Immediate Response
-
 → Delayed Response
-
 → Repeated Trend
-
 → Updated Athlete State
-
 → Maintain / Progress / Reduce / Modify / Withdraw / Transition
-
 → New Prescription.
 
 A training plan has high adaptive capacity when it can update local decisions
@@ -1329,7 +624,12 @@ A training plan has low adaptive capacity when it either:
 - continues unchanged despite meaningful evidence,
 - or changes so frequently that noise replaces planning.
 
-## 6. Plan Hierarchy
+The operational decision states, escalation rules, and decision record are
+defined in [Progression Rules](../rules/progression.md). The Transition state
+is defined in [Stage Transition Rules](../rules/stage_transition.md).
+
+---
+## 4. Plan Hierarchy
 
 Training planning operates across multiple time scales.
 
@@ -1345,7 +645,7 @@ operational planning, execution, and feedback.
 
 ---
 
-### 6.1 Cycle / Season Level
+### 4.1 Cycle / Season Level
 
 The Cycle level defines the broadest planning context.
 
@@ -1380,7 +680,7 @@ but it may still be revised when major assumptions change.
 
 ---
 
-### 6.2 Mesocycle Level
+### 4.2 Mesocycle Level
 
 The Mesocycle level defines the current adaptation problem.
 
@@ -1417,7 +717,7 @@ Transition depends on evidence, constraints, and competition timing.
 
 ---
 
-### 6.3 Week / Microcycle Level
+### 4.3 Week / Microcycle Level
 
 The Week level organizes training stress and opportunities over several days.
 
@@ -1452,7 +752,7 @@ all missed work into the remaining days.
 
 ---
 
-### 6.4 Session Level
+### 4.4 Session Level
 
 The Session level converts weekly intent into an executable training
 prescription.
@@ -1499,7 +799,7 @@ It is not yet evidence that the intended training stimulus occurred.
 
 ---
 
-### 6.5 Task / Exercise Level
+### 4.5 Task / Exercise Level
 
 The Task level describes an individual training action.
 
@@ -1538,7 +838,7 @@ Exercise Name ≠ Training Stimulus.
 
 ---
 
-### 6.6 Actual Result Layer
+### 4.6 Actual Result Layer
 
 Actual Result is not another planning period.
 
@@ -1572,7 +872,7 @@ prescribed.
 
 ---
 
-### 6.7 Response Layer
+### 4.7 Response Layer
 
 The Response layer records what happened after the exposure.
 
@@ -1596,7 +896,7 @@ Interpretation occurs through the Feedback Decision Model.
 
 ---
 
-### 6.8 Benchmark Layer
+### 4.8 Benchmark Layer
 
 Benchmarks provide standardized reference points.
 
@@ -1625,7 +925,7 @@ It does not independently determine readiness or training priority.
 
 ---
 
-### 6.9 Information Flow Between Levels
+### 4.9 Information Flow Between Levels
 
 The hierarchy should operate in both directions.
 
@@ -1670,7 +970,7 @@ Bottom-up empirical correction.
 
 ---
 
-### 6.10 Different Levels Change at Different Speeds
+### 4.10 Different Levels Change at Different Speeds
 
 Not every new observation should modify every planning level.
 
@@ -1699,7 +999,7 @@ This protects the system from both rigidity and overreaction.
 
 ---
 
-### Plan Hierarchy Rule
+### Hierarchy Invariants
 
 The system should use the following hierarchy:
 
@@ -1723,16 +1023,208 @@ Evidence moves upward from execution to revised strategy.
 No lower-level decision should contradict a higher-level objective without
 explicitly triggering review of that higher-level assumption.
 
-## 7. Hard Constraints
+---
+
+## 5. Constraints and Information State
+
+### 5.1 Hard Constraints and Feasible Planning Space
+A hard constraint is a condition that defines the feasible planning space.
+
+Hard constraints are not ordinary training variables to be optimized away.
+
+They limit which plans are currently admissible.
+
+The planning system must distinguish between:
+
+Hard Constraints
+
+and
+
+Soft Constraints / Preferences.
+
+A soft constraint may influence plan selection.
+
+A hard constraint can make an otherwise attractive plan infeasible.
+
+Therefore:
+
+Best Expected Training Effect
+
+does not override
+
+Feasibility, Safety, Time, or Non-Negotiable Restrictions.
 
 ---
 
-## 8. Insufficient Information
+### Constraint Invariants
+
+Before optimizing a training plan,
+the system must first define the feasible planning space.
+
+The sequence is:
+
+Objective
+
+→ Identify Hard Constraints
+
+→ Remove Infeasible Options
+
+→ Identify Remaining Soft Constraints
+
+→ Compare Feasible Training Options
+
+→ Select and Monitor.
+
+The system must not choose an infeasible plan merely because its theoretical
+training benefit appears higher.
+
+When a hard constraint changes,
+the feasible planning space should be updated.
+
+When a hard constraint cannot be satisfied,
+the objective or method must change.
+The operational identification, conflict handling, and response rules are
+defined in [Constraint Handling Rules](../rules/constraint_handling.md).
+
+### 5.2 Information Sufficiency and Uncertainty
+A planning system must distinguish between:
+
+Information that is missing
+
+and
+
+Information that is necessary for the current decision.
+
+Not every unknown variable prevents action.
+
+However, when missing information materially affects the expected benefit,
+cost, risk, or feasibility of a decision,
+the system must not silently replace that information with an assumption.
+
+Insufficient information is therefore decision-dependent.
+
+The relevant question is not:
+
+"Do we know everything?"
+
+The relevant question is:
+
+"Do we know enough to make this decision at an acceptable level of
+uncertainty?"
 
 ---
 
-## 9. Plan Comparison
+### Information Sufficiency Invariants
+
+The system should preserve the following principles:
+
+1. Missing information is not automatically zero, normal, or favorable.
+2. Not every unknown prevents action.
+3. Information requirements depend on the consequence of the decision.
+4. Decision-critical uncertainty must remain explicit.
+5. Conflicting signals require interpretation rather than mechanical averaging.
+6. Measurement quality matters as much as data availability.
+7. More information is not automatically better if obtaining it has meaningful
+   cost.
+8. Under high uncertainty, reversible and bounded decisions are generally
+   preferable to aggressive irreversible changes.
+9. "Cannot yet determine" is a legitimate planning output.
+10. Confidence must not exceed the quality and relevance of the available
+    information.
+
+The system should seek the minimum information necessary to support the next
+meaningful decision rather than attempting to eliminate all uncertainty.
+The operational treatment of missing, conflicting, and uncertain information
+is defined in [Uncertainty Handling Rules](../rules/uncertainty_handling.md).
+
+---
+## 6. Plan Comparison Model
+
+Plan superiority is conditional. The relevant question is not which plan is
+universally best, but which feasible option is currently preferable for the
+athlete, objective, state, time horizon, constraints, and uncertainty at hand.
+
+Necessary conditions come first: minimum information sufficiency, structural
+validity, and hard-constraint feasibility determine the comparison set. An
+infeasible or structurally defective option is not a normal alternative merely
+because its theoretical upside appears large.
+
+Comparison is multi-objective. Decision-relevant dimensions include:
+
+- expected 100m-relevant benefit,
+- recovery cost,
+- opportunity cost,
+- risk,
+- uncertainty,
+- reversibility,
+- time to benefit,
+- competition availability,
+- execution reliability,
+- monitoring value,
+- and complexity.
+
+Pareto dominance may remove an option that is no better on all relevant
+dimensions and meaningfully worse on at least one. Many decisions instead
+involve trade-offs, so there may be no unique universal winner. The system must
+not hide these trade-offs with false numerical precision.
+
+Current marginal value matters more than historical reputation. The comparison
+must be updated as conditions and observed responses change. Decision quality
+must be evaluated from the information available when the decision was made,
+and must not be replaced retrospectively by observed outcome.
+
+The operational comparison dimensions, tests, and invariants are defined in
+[Plan Comparison Rules](../rules/plan_comparison.md).
 
 ---
 
-## 10. Evaluation Procedure
+## 7. Model Interfaces
+
+This Core Model defines what other documents must call; it does not repeat
+their operational content.
+
+### Rules
+
+- [Structural Validity Rules](../rules/structural_validity.md) determine how
+  Structural Validity is checked.
+- [Conditional Appropriateness Rules](../rules/conditional_appropriateness.md)
+  determine when a structurally valid plan is appropriate for the current
+  athlete and conditions.
+- [Progression Rules](../rules/progression.md) and
+  [Stage Transition Rules](../rules/stage_transition.md) implement Adaptive
+  Capacity decision states.
+- [Constraint Handling Rules](../rules/constraint_handling.md) implement
+  hard-constraint assessment and feasible-space handling.
+- [Uncertainty Handling Rules](../rules/uncertainty_handling.md) implement
+  decision-specific information sufficiency and uncertainty handling.
+- [Plan Comparison Rules](../rules/plan_comparison.md) implement multi-objective
+  comparison among feasible options.
+
+### Workflows
+
+[Audit Existing Plan Workflow](../workflows/audit_existing_plan.md) applies the
+model in ordered ex ante and ex post evaluation. Its concise model interface
+is:
+
+Context
+→ Problem
+→ Information
+→ Structural Validity
+→ Constraints
+→ Feasible Options
+→ Conditional Appropriateness
+→ Comparison
+→ Decision
+→ Actual Exposure
+→ Response
+→ Updated State
+→ Revised Decision.
+
+### Adjacent Core Models
+
+- [100m Performance Model](02_100m_performance_model.md) supplies the target
+  performance problem and direct-performance context.
+- [Stimulus, Dose, and Cost Model](03_stimulus_dose_cost_model.md) supplies the
+  interpretation of training stimulus, dose, and cost.
+- [Feedback Decision Model](04_feedback_decision_model.md) supplies the
+  interpretation of feedback and the decision-update model.
